@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         categories = findViewById(R.id.categoriesList);
         adapter = new CategoriesAdapter(this, arrayList);
         categories.setAdapter(adapter);
-
+        // Чтение из БД
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         for(int i = 1; i<=5; i++) {
