@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
                     arrayList.add(new CategoryList(categoryName, categoryDescription));
                     adapter.notifyDataSetChanged();
+                    // Нужно оптимизировать
                 }
 
                 @Override
