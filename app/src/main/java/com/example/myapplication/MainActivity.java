@@ -31,34 +31,34 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         categories = findViewById(R.id.categoriesList);
         adapter = new CategoriesAdapter(this, arrayList);
         categories.setAdapter(adapter);
-        // Чтение из БД
+
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("categories");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(arrayList.size()>0) arrayList.clear();
+                for (DataSnapshot ds : dataSnapshot.getChildren()){
 
-        for(int i = 1; i<=5; i++) {
-
-            DatabaseReference myRef = database.getReference("categories/category" + i);
-            myRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    String categoryName = dataSnapshot.child("categoryName").getValue(String.class);
-                    String categoryDescription = dataSnapshot.child("categoryDescription").getValue(String.class);
-                    String url = dataSnapshot.child("categoryImg").getValue(String.class);
+                    String categoryName = ds.child("categoryName").getValue(String.class);
+                    String categoryDescription = ds.child("categoryDescription").getValue(String.class);
+                    String url = ds.child("categoryImg").getValue(String.class);
                     arrayList.add(new CategoryList(categoryName, categoryDescription, url));
                     adapter.notifyDataSetChanged();
-                    // Нужно оптимизировать
                 }
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    // Failed to read value
-                    Log.w("TAG", "Failed to read value.", error.toException());
-                }
-            });
-        }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Failed to read value
+                Log.w("TAG", "Failed to read value.", error.toException());
+            }
+        });
+
     }
 
 }
