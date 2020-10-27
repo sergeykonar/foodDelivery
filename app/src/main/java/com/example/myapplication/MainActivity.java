@@ -1,4 +1,4 @@
-package com.example.myapplication;
+ package com.example.myapplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.icu.util.ULocale;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -13,6 +14,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -44,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     String categoryName = dataSnapshot.child("categoryName").getValue(String.class);
                     String categoryDescription = dataSnapshot.child("categoryDescription").getValue(String.class);
-
-                    arrayList.add(new CategoryList(categoryName, categoryDescription));
+                    String url = dataSnapshot.child("categoryImg").getValue(String.class);
+                    arrayList.add(new CategoryList(categoryName, categoryDescription, url));
                     adapter.notifyDataSetChanged();
                     // Нужно оптимизировать
                 }
