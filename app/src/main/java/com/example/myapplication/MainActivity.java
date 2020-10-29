@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         categories = findViewById(R.id.categoriesList);
-        adapter = new CategoriesAdapter(this, arrayList);
+        adapter = new CategoriesAdapter(this, arrayList, this);
         categories.setAdapter(adapter);
 
 
@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                     String url = ds.child("categoryImg").getValue(String.class);
                     arrayList.add(new CategoryList(categoryName, categoryDescription, url));
                     adapter.notifyDataSetChanged();
+
                 }
             }
 
@@ -66,5 +67,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+
 
 }

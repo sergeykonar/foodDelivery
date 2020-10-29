@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
@@ -22,10 +26,12 @@ public class CategoriesAdapter extends BaseAdapter {
     private TextView categoryName, categoryDescription;
     private ImageView categoryImg;
     private Button more;
+    private Activity mActivity;
 
-    public CategoriesAdapter(Context context, ArrayList<CategoryList> arrayList) {
+    public CategoriesAdapter(Context context, ArrayList<CategoryList> arrayList, Activity mActivity) {
         this.context = context;
         this.arrayList = arrayList;
+        this.mActivity = mActivity;
     }
 
     @Override
@@ -68,6 +74,11 @@ public class CategoriesAdapter extends BaseAdapter {
                 TextView s = (TextView) finalConvertView.findViewById(R.id.categoryName);
 
                 Log.d("TAGS", s.getText().toString());
+                Intent a = new Intent(finalConvertView.getContext(), CategoryMenu.class);
+                a.putExtra("Category", s.getText().toString());
+                finalConvertView.getContext().startActivity(a);
+                mActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                Intent intent = new Intent(MainActivity.class, CategoryMenu.class);
                 // Отслеживание нажатия на кнопку внутри элемента списка
             }
         });
