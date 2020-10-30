@@ -3,9 +3,12 @@ package com.example.myapplication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -22,6 +25,7 @@ public class CategoryMenu extends AppCompatActivity {
     private FoodAdapter adapter;
     private ArrayList<Food> arrayList = new ArrayList<>();
     private ListView foodList;
+    private Button backButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +34,14 @@ public class CategoryMenu extends AppCompatActivity {
         Intent intent = getIntent();
         category = intent.getStringExtra("Category");
         Log.d("TAG", category);
+
+        backButton = (Button) findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         foodList = findViewById(R.id.foodList);
         adapter = new FoodAdapter(this, arrayList);
@@ -58,6 +70,7 @@ public class CategoryMenu extends AppCompatActivity {
             }
         });
     }
+
 
 
 }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,11 +61,21 @@ public class FoodAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Log.d("TAG", String.valueOf(position));
-
+                TextView s = (TextView) finalConvertView.findViewById(R.id.foodName);
                 ConfirmFoodDialog confirmFoodDialog = new ConfirmFoodDialog();
+
+                Bundle args = new Bundle();
+                args.putString("Dish", s.getText().toString());
+
+
+                confirmFoodDialog.setArguments(args);
+
                 confirmFoodDialog.show(((CategoryMenu) context).getSupportFragmentManager(), "Title");
 
-//                Intent intent = new Intent(MainActivity.class, CategoryMenu.class);
+
+
+
+
                 // Отслеживание нажатия на кнопку внутри элемента списка
             }
         });
